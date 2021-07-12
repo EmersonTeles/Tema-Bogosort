@@ -17,12 +17,6 @@ function Bogosort(N){
     arr = createArray(N)
     console.log('original: ', arr)
     
-    let isSorted = arr.map((arr)=>{
-        if (arr[i-1] > arr[i]) {
-            return false
-        }
-        return true
-    })
     const isSorted = function(arr){
         
         for(var i = 1; i < arr.length; i++){
