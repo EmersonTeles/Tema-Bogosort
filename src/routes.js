@@ -1,22 +1,26 @@
-const express = require('express')
-const Bogosort = require('./bogosort.js')
+const { Router } = require('express');
+const Bogosort = require('./Components/bogosort.js');
 
-const routes = express.Router()
+const router = Router();
 
-routes.get('/Tema/:num',(req,res)=>{  
-    const { num } = req.params  
-    const valor = parseInt(num)
-    const [sortedArray, timing, attempts] = Bogosort(valor)
+router.get('/Tema/:intN',(req,res)=>{  
+    const intN = parseInt(req.params.intN);  
+    const [sortedArray, timing, attempts] = Bogosort(intN);
+
     try{
-        res.status(200).json(
-            {   'Lista de numeros': `${sortedArray}`,
-                'Tempo de execução': `${timing}ms`,
-                'Tentativas': `${attempts}`,
-                'Tamanho do array': `${valor}`,
-            })
-    }catch(error){
-        console.log(error)
-    }
-})
+        if(intN > 1){
+            res.status(200).json(
+                {   'Lista de numeros': `${sortedArray}`,
+                    'Tempo de execução': `${timing}ms`,
+                    'Tentativas': `${attempts}`,
+                    'Tamanho do array': `${intN}`,
+                });
+        }else{
+            throw new Error ("Numero igual ou menor que 1.")
+        }
+    }catch(err){
+        console.log(err)
+    };
+});
 
-module.exports = routes;
+module.exports = router;
